@@ -28,6 +28,8 @@ try{
     const usersCollection = client.db('bazar').collection('users');
     const mobileCollection = client.db('bazar').collection('mobile_collection');
 
+   const bookingsCollection = client.db('bazar').collection('bookings');
+
     app.get('/allcategories',async(req,res)=>{
         const query = {}
         const options= await AllCategoriesCollection.find(query).toArray();
@@ -36,15 +38,6 @@ try{
     })
       
 
-
-
-    // app.get('/allcategories/:id', async (req, res) => {
-    //     const id = req.params.id;
-    //     const query = { _id: ObjectId(id) };
-    //     const options = await AllCategoriesCollection.findOne(query);
-    //     res.send(options);
-    // });
-
     app.get('/allcategories/:id', async (req, res) => {
         const id = req.params.id;
         const query = { category_id: id };
@@ -52,6 +45,8 @@ try{
         const collections = await mobileCollection.find(query).toArray();
         res.send(collections);
         });
+
+
 
 
 
@@ -82,6 +77,41 @@ try{
         res.send(users);
     });
 
+    app.get('/users/admin/:email', async (req, res) => {
+        const email = req.params.email;
+        const query = { email }
+        const user = await usersCollection.findOne(query);
+        res.send({ isAdmin: user?.role === 'admin' });
+    })
+
+
+
+
+
+
+
+    app.put('/users/admin/:id',verifyJWT, async (req, res) => {
+        const decodedEmail = req.decoded.email;
+        const query = { email: decodedEmail };
+        const user = await usersCollection.findOne(query);
+
+        if (user?.role !== 'admin') {
+            return res.status(403).send({ message: 'forbidden access' })
+        }
+
+        const id = req.params.id;
+        const filter = { _id: ObjectId(id) }
+        const options = { upsert: true };
+        const updatedDoc = {
+            $set: {
+                role: 'admin'
+            }
+        }
+        const result = await usersCollection.updateOne(filter, updatedDoc, options).toArray;
+        res.send(result);
+    })
+    
+
 
 
     
@@ -111,3 +141,19 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
     console.log(`second hand bazar server running ${port}`);
 })
+
+
+
+// app.put('/users/admin/:id', async (req, res) => {
+
+//     const id=req.params.id;
+//     const filter ={_id: ObjectId(id)}
+//     const options={upsert: true}
+//   const updateDoc={
+//     $set:{
+//         role:'admin'
+//     }
+//   }
+//   const result = await usersCollection.updateOne(filter,updateDoc,options).toArray();
+//   res.send(result)
+//     }
