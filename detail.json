@@ -1,0 +1,74 @@
+
+[
+    {
+        "category_id" :"01",
+        "title": "Samsung Galaxy A53 5G",
+        "image":"https://images.thedailystar.net/sites/default/files/images/2022/04/03/…",
+        "location":"Chawakbazar,chittagong",
+        "resalePrice": 21000
+    },
+    {
+        "category_id" :"01",
+        "title": "Samsung Galaxy S23",
+        "image":"https://www.cnet.com/a/img/resize/e932f8bed4497f9f49d15c41e083327e6d26…",
+        "location":"Chawakbazar,chittagong",
+        "resalePrice": 31000
+    },
+    {
+        "category_id" :"01",
+        "title": "Samsung Galaxy A53 5G",
+        "image":"https://images.thedailystar.net/sites/default/files/images/2022/04/03/…",
+        "location":"Chawakbazar,chittagong",
+        "resalePrice": 25000
+    },
+
+
+    {
+        "category_id" :"02",
+        "title": "Iphone 7",
+        "image":"https://www.bdstall.com/asset/product-image/giant_118765.jpg",
+        "location":"edigah,chittagong",
+        "resalePrice": 25000
+    },
+    {
+        "category_id" :"02",
+        "title": "Iphone x ",
+        "image":"https://www.bdstall.com/asset/product-image/giant_171190.jpg",
+        "location":"cda,chittagong",
+        "resalePrice": 120000
+    },
+    {
+        "category_id" :"02",
+        "title": "Iphone 12",
+        "image":"https://www.apple.com/newsroom/images/product/iphone/standard/apple_iphone-12-spring21_purple_04202021_big.jpg.large.jpg",
+        "location":"molla para,chittagong",
+        "resalePrice": 150000
+    },
+
+    {
+        "category_id" :"03",
+        "title": "Nokia 1200",
+        "image":"https://www.cnet.com/a/img/resize/11bac7cd7af3d021eac5cc97dc430ccabcf1b347/hub/2014/02/24/1ae9eb20-cbf2-11e2-9a4a-0291187b029a/440x330_1.jpg?auto=webp&width=768",
+        "location":"molla para,chittagong",
+        "resalePrice": 150000
+    },
+    {
+        "category_id" :"03",
+        "title": "Nokia C2",
+        "image":"https://www.mobiledokan.com/wp-content/uploads/2022/07/Nokia-C2-2nd-Edition.jpg",
+        "location":"molla para,chittagong",
+
+        "resalePrice": 180000
+    },
+
+    {
+        "category_id" :"03",
+        "title": "Nokia G21",
+        "location":"molla para,chittagong",
+        "image":"https://www.mobiledokan.com/wp-content/uploads/2022/07/Nokia-1.4.jpg",
+        "resalePrice": 25000
+    }
+
+
+
+]

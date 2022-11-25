@@ -1,6 +1,7 @@
 
 const express = require('express');
 const cors = require('cors');
+const jwt = require('jsonwebtoken');
 
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config();
@@ -24,12 +25,31 @@ console.log(uri)
 async function run(){
 try{
     const AllCategoriesCollection= client.db('bazar').collection('categories');
+    const usersCollection = client.db('bazar').collection('users');
+
     app.get('/allcategories',async(req,res)=>{
         const query = {}
         const options= await AllCategoriesCollection.find(query).toArray();
         console.log(options)
         res.send(options)
     })
+
+    app.get('/allcategories/:id', async (req, res) => {
+        const id = req.params.id;
+        const query = { _id: ObjectId(id) };
+        const options = await AllCategoriesCollection.findOne(query);
+        res.send(options);
+    });
+
+    app.post('/users', async (req, res) => {
+        const user = req.body;
+        console.log(user);
+        const result = await usersCollection.insertOne(user);
+        res.send(result);
+    });
+    
+
+
     
 }
 finally{
