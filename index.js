@@ -26,6 +26,7 @@ async function run(){
 try{
     const AllCategoriesCollection= client.db('bazar').collection('categories');
     const usersCollection = client.db('bazar').collection('users');
+    const mobileCollection = client.db('bazar').collection('mobile_collection');
 
     app.get('/allcategories',async(req,res)=>{
         const query = {}
@@ -33,13 +34,25 @@ try{
         console.log(options)
         res.send(options)
     })
+      
+
+
+
+    // app.get('/allcategories/:id', async (req, res) => {
+    //     const id = req.params.id;
+    //     const query = { _id: ObjectId(id) };
+    //     const options = await AllCategoriesCollection.findOne(query);
+    //     res.send(options);
+    // });
 
     app.get('/allcategories/:id', async (req, res) => {
         const id = req.params.id;
-        const query = { _id: ObjectId(id) };
-        const options = await AllCategoriesCollection.findOne(query);
-        res.send(options);
-    });
+        const query = { category_id: id };
+
+        const collections = await mobileCollection.find(query).toArray();
+        res.send(collections);
+        });
+
 
 
 
@@ -54,13 +67,19 @@ try{
         }
         res.status(403).send({ accessToken: '' })
     });
-    
+
 
     app.post('/users', async (req, res) => {
         const user = req.body;
         console.log(user);
         const result = await usersCollection.insertOne(user);
         res.send(result);
+    });
+
+    app.get('/users', async (req, res) => {
+        const query = {};
+        const users = await usersCollection.find(query).toArray();
+        res.send(users);
     });
 
 
