@@ -36,6 +36,14 @@ try{
         console.log(options)
         res.send(options)
     })
+    
+    app.get('/bookings',async(req,res)=>{
+        const query = {}
+        const options= await bookingsCollection.find(query).toArray();
+        console.log(options)
+        res.send(options)
+    })
+
       
 
     app.get('/allcategories/:id', async (req, res) => {
@@ -47,21 +55,58 @@ try{
         });
 
 
+app.post('/bookings', async (req, res) => {
+    const booking = req.body;
+    console.log(booking);
+    const query = {
+        
+        email: booking.email,
+       
+    }
+
+    const alreadyBooked = await bookingsCollection.find(query).toArray();
+
+    if (alreadyBooked.length) {
+        const message = `You already have a booking on ${booking.email}`
+        return res.send({ acknowledged: false, message })
+    }
+
+    const result = await bookingsCollection.insertOne(booking);
+    res.send(result);
+});
+ 
 
 
 
 
 
-    app.get('/jwt', async (req, res) => {
-        const email = req.query.email;
-        const query = { email: email };
-        const user = await usersCollection.findOne(query);
-        if (user) {
-            const token = jwt.sign({ email }, process.env.ACCESS_TOKEN, { expiresIn: '1h' })
-            return res.send({ accessToken: token });
-        }
-        res.status(403).send({ accessToken: '' })
-    });
+
+
+// app.get('/bookings', verifyJWT, async (req, res) => {
+//     // const email = req.query.email;
+//     // const decodedEmail = req.decoded.email;
+
+//     // if (email !== decodedEmail) {
+//     //     return res.status(403).send({ message: 'forbidden access' });
+//     // }
+
+//     const query = { email: email };
+//     const bookings = await bookingsCollection.find(query).toArray();
+//     res.send(bookings);
+// })
+
+
+
+    // app.get('/jwt', async (req, res) => {
+    //     const email = req.query.email;
+    //     const query = { email: email };
+    //     const user = await usersCollection.findOne(query);
+    //     if (user) {
+    //         const token = jwt.sign({ email }, process.env.ACCESS_TOKEN, { expiresIn: '1h' })
+    //         return res.send({ accessToken: token });
+    //     }
+    //     res.status(403).send({ accessToken: '' })
+    // });
 
 
     app.post('/users', async (req, res) => {
@@ -123,17 +168,6 @@ finally{
 run().catch(console.log)
 
 
-
-
-        
-    
-    
-    
-          
-
-
-
-
 app.get('/', (req, res) => {
     res.send('second hand bazar server running')
 })
@@ -144,16 +178,3 @@ app.listen(port, () => {
 
 
 
-// app.put('/users/admin/:id', async (req, res) => {
-
-//     const id=req.params.id;
-//     const filter ={_id: ObjectId(id)}
-//     const options={upsert: true}
-//   const updateDoc={
-//     $set:{
-//         role:'admin'
-//     }
-//   }
-//   const result = await usersCollection.updateOne(filter,updateDoc,options).toArray();
-//   res.send(result)
-//     }
